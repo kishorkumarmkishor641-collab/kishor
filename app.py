@@ -41,6 +41,66 @@ def get_db():
     return conn
 
 
+def build_dashboard(username):
+    return {
+        "orders": [
+            {
+                "name": "Paracetamol",
+                "quantity": "2 packs",
+                "dose": "500 mg",
+                "status": "Ready",
+            },
+            {
+                "name": "Vitamin D",
+                "quantity": "1 bottle",
+                "dose": "60 capsules",
+                "status": "Processing",
+            },
+            {
+                "name": "Antacid",
+                "quantity": "1 pack",
+                "dose": "20 tablets",
+                "status": "Ready",
+            },
+        ],
+        "status_steps": [
+            {
+                "title": "Order placed",
+                "description": "We received your medicine request.",
+                "state": "completed",
+            },
+            {
+                "title": "Processing",
+                "description": "Verifying prescription and preparing your order.",
+                "state": "active",
+            },
+            {
+                "title": "Payment",
+                "description": "Your next payment is scheduled soon.",
+                "state": "pending",
+            },
+            {
+                "title": "Delivery",
+                "description": "Your package will be dispatched shortly.",
+                "state": "pending",
+            },
+        ],
+        "payment": {
+            "mode": "Card",
+            "amount": "$24.50",
+            "next_payment": "Today, 5:00 PM",
+            "status": "Paid",
+            "receipt": "RX-1024",
+        },
+        "delivery": {
+            "address": "House No. 12, Green Park Road, Near City Pharmacy, Hyderabad.",
+            "eta": "Today, 8:30 PM",
+            "method": "Home delivery",
+            "status": "On the way",
+        },
+    }
+
+
 @app.before_request
 def ensure_db():
     init_db()
@@ -87,7 +147,13 @@ def home():
     ).fetchall()
     conn.close()
 
-    return render_template("home.html", username=username, history=history)
+    dashboard = build_dashboard(username)
+    return render_template(
+        "home.html",
+        username=username,
+        history=history,
+        dashboard=dashboard,
+    )
 
 
 @app.route("/logout")

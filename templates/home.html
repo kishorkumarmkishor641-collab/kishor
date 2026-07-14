@@ -18,65 +18,41 @@
           <a class="logout-link" href="/logout">Logout</a>
         </div>
 
+        <div class="dashboard-nav">
+          <a class="nav-link active" href="/home">Overview</a>
+          <a class="nav-link" href="#orders">Orders</a>
+          <a class="nav-link" href="#payment">Payments</a>
+          <a class="nav-link" href="#delivery">Delivery</a>
+        </div>
+
         <div class="status-timeline">
-          <div class="timeline-step completed">
-            <span class="step-number">1</span>
+          {% for step in dashboard.status_steps %}
+          <div class="timeline-step {{ step.state }}">
+            <span class="step-number">{{ loop.index }}</span>
             <div>
-              <strong>Order placed</strong>
-              <p>We received your medicine request.</p>
+              <strong>{{ step.title }}</strong>
+              <p>{{ step.description }}</p>
             </div>
           </div>
-          <div class="timeline-step active">
-            <span class="step-number">2</span>
-            <div>
-              <strong>Processing</strong>
-              <p>Verifying prescription and preparing order.</p>
-            </div>
-          </div>
-          <div class="timeline-step">
-            <span class="step-number">3</span>
-            <div>
-              <strong>Payment</strong>
-              <p>Your next payment is due soon.</p>
-            </div>
-          </div>
-          <div class="timeline-step">
-            <span class="step-number">4</span>
-            <div>
-              <strong>Delivery</strong>
-              <p>Ready for pickup or home delivery.</p>
-            </div>
-          </div>
+          {% endfor %}
         </div>
 
         <div class="home-grid">
-          <article class="panel">
+          <article class="panel" id="orders">
             <div class="panel-title-row">
               <h2>Ordered medicines</h2>
-              <span class="badge">3 items</span>
+              <span class="badge">{{ dashboard.orders|length }} items</span>
             </div>
             <ul class="item-list">
+              {% for order in dashboard.orders %}
               <li>
                 <div>
-                  <strong>Paracetamol</strong>
-                  <p class="item-meta">2 packs • 500mg each</p>
+                  <strong>{{ order.name }}</strong>
+                  <p class="item-meta">{{ order.quantity }} • {{ order.dose }}</p>
                 </div>
-                <span>Ready</span>
+                <span>{{ order.status }}</span>
               </li>
-              <li>
-                <div>
-                  <strong>Vitamin D</strong>
-                  <p class="item-meta">1 bottle • 60 capsules</p>
-                </div>
-                <span>Processing</span>
-              </li>
-              <li>
-                <div>
-                  <strong>Antacid</strong>
-                  <p class="item-meta">1 pack • 20 tablets</p>
-                </div>
-                <span>Ready</span>
-              </li>
+              {% endfor %}
             </ul>
             <div class="panel-actions">
               <button class="secondary-button">Reorder medicines</button>
@@ -88,54 +64,57 @@
               <h2>Processing next</h2>
               <span class="badge accent">Now</span>
             </div>
+            {% for step in dashboard.status_steps %}
+            {% if step.state == 'active' %}
             <div class="status-detail">
               <p class="status-label">Current stage</p>
-              <strong>Prescription verification</strong>
-              <p class="detail-text">Your order is being reviewed and the pharmacy is confirming availability.</p>
+              <strong>{{ step.title }}</strong>
+              <p class="detail-text">{{ step.description }}</p>
             </div>
+            {% endif %}
+            {% endfor %}
             <div class="progress-line">
-              <span class="progress-dot completed"></span>
-              <span class="progress-dot completed"></span>
-              <span class="progress-dot active"></span>
-              <span class="progress-dot"></span>
+              {% for step in dashboard.status_steps %}
+              <span class="progress-dot {{ step.state }}"></span>
+              {% endfor %}
             </div>
             <div class="progress-items">
-              <span>Order</span>
-              <span>Verify</span>
-              <span>Payment</span>
-              <span>Ship</span>
+              {% for step in dashboard.status_steps %}
+              <span>{{ step.title }}</span>
+              {% endfor %}
             </div>
           </article>
 
-          <article class="panel">
+          <article class="panel" id="payment">
             <div class="panel-title-row">
               <h2>Payment update</h2>
-              <span class="badge success">Paid</span>
+              <span class="badge success">{{ dashboard.payment.status }}</span>
             </div>
             <ul class="item-list">
-              <li><strong>Mode</strong><span>Card</span></li>
-              <li><strong>Amount</strong><span>$24.50</span></li>
-              <li><strong>Next payment</strong><span>Today, 5:00 PM</span></li>
+              <li><strong>Mode</strong><span>{{ dashboard.payment.mode }}</span></li>
+              <li><strong>Amount</strong><span>{{ dashboard.payment.amount }}</span></li>
+              <li><strong>Next payment</strong><span>{{ dashboard.payment.next_payment }}</span></li>
+              <li><strong>Receipt</strong><span>{{ dashboard.payment.receipt }}</span></li>
             </ul>
             <div class="panel-actions">
               <button class="primary-button">View invoice</button>
             </div>
           </article>
 
-          <article class="panel wide">
+          <article class="panel wide" id="delivery">
             <div class="panel-title-row">
-              <h2>Delivery & next payment page</h2>
-              <span class="badge">Home</span>
+              <h2>Delivery and next payment</h2>
+              <span class="badge">{{ dashboard.delivery.method }}</span>
             </div>
-            <p class="detail-text">House No. 12, Green Park Road, Near City Pharmacy, Hyderabad.</p>
+            <p class="detail-text">{{ dashboard.delivery.address }}</p>
             <div class="summary-grid">
               <div>
                 <p class="summary-label">Estimated arrival</p>
-                <strong>Today, 8:30 PM</strong>
+                <strong>{{ dashboard.delivery.eta }}</strong>
               </div>
               <div>
                 <p class="summary-label">Payment due</p>
-                <strong>$12.00</strong>
+                <strong>{{ dashboard.payment.next_payment }}</strong>
               </div>
             </div>
             <div class="panel-actions">
@@ -144,6 +123,20 @@
             </div>
           </article>
         </div>
+
+        <article class="panel activity-panel">
+          <div class="panel-title-row">
+            <h2>Recent activity</h2>
+            <span class="badge">Today</span>
+          </div>
+          <ul class="item-list">
+            {% for item in history %}
+            <li><strong>{{ item.username }}</strong><span>{{ item.logged_at }}</span></li>
+            {% else %}
+            <li><strong>No activity yet</strong><span>Start ordering</span></li>
+            {% endfor %}
+          </ul>
+        </article>
       </section>
     </div>
   </body>
