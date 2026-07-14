@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MediCare Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body>
+    <div class="page">
+      <section class="hero-card">
+        <div class="hero-copy">
+          <p class="eyebrow">Medicine care portal</p>
+          <h1>Secure login for your health dashboard</h1>
+          <p>
+            Sign in to view your personal care home page and keep your medicine
+            routine organized.
+          </p>
+        </div>
+
+        <form class="login-card" action="/login" method="post">
+          <h2>Welcome back</h2>
+          <label for="username">Username</label>
+          <input id="username" name="username" type="text" placeholder="Enter username" required />
+
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" placeholder="Enter password" required />
+
+          <button type="submit">Login</button>
+          {% if error %}
+          <p class="error">{{ error }}</p>
+          {% endif %}
+        </form>
+      </section>
+    </div>
+  </body>
+</html>

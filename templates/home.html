@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MediCare Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body>
+    <div class="page home-page">
+      <section class="home-card">
+        <div class="home-header">
+          <div>
+            <p class="eyebrow">Medicine dashboard</p>
+            <h1>Hello, {{ username }}!</h1>
+            <p>Your order, payment, and delivery progress are ready at a glance.</p>
+          </div>
+          <a class="logout-link" href="/logout">Logout</a>
+        </div>
+
+        <div class="status-timeline">
+          <div class="timeline-step completed">
+            <span class="step-number">1</span>
+            <div>
+              <strong>Order placed</strong>
+              <p>We received your medicine request.</p>
+            </div>
+          </div>
+          <div class="timeline-step active">
+            <span class="step-number">2</span>
+            <div>
+              <strong>Processing</strong>
+              <p>Verifying prescription and preparing order.</p>
+            </div>
+          </div>
+          <div class="timeline-step">
+            <span class="step-number">3</span>
+            <div>
+              <strong>Payment</strong>
+              <p>Your next payment is due soon.</p>
+            </div>
+          </div>
+          <div class="timeline-step">
+            <span class="step-number">4</span>
+            <div>
+              <strong>Delivery</strong>
+              <p>Ready for pickup or home delivery.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="home-grid">
+          <article class="panel">
+            <div class="panel-title-row">
+              <h2>Ordered medicines</h2>
+              <span class="badge">3 items</span>
+            </div>
+            <ul class="item-list">
+              <li>
+                <div>
+                  <strong>Paracetamol</strong>
+                  <p class="item-meta">2 packs • 500mg each</p>
+                </div>
+                <span>Ready</span>
+              </li>
+              <li>
+                <div>
+                  <strong>Vitamin D</strong>
+                  <p class="item-meta">1 bottle • 60 capsules</p>
+                </div>
+                <span>Processing</span>
+              </li>
+              <li>
+                <div>
+                  <strong>Antacid</strong>
+                  <p class="item-meta">1 pack • 20 tablets</p>
+                </div>
+                <span>Ready</span>
+              </li>
+            </ul>
+            <div class="panel-actions">
+              <button class="secondary-button">Reorder medicines</button>
+            </div>
+          </article>
+
+          <article class="panel status-panel">
+            <div class="panel-title-row">
+              <h2>Processing next</h2>
+              <span class="badge accent">Now</span>
+            </div>
+            <div class="status-detail">
+              <p class="status-label">Current stage</p>
+              <strong>Prescription verification</strong>
+              <p class="detail-text">Your order is being reviewed and the pharmacy is confirming availability.</p>
+            </div>
+            <div class="progress-line">
+              <span class="progress-dot completed"></span>
+              <span class="progress-dot completed"></span>
+              <span class="progress-dot active"></span>
+              <span class="progress-dot"></span>
+            </div>
+            <div class="progress-items">
+              <span>Order</span>
+              <span>Verify</span>
+              <span>Payment</span>
+              <span>Ship</span>
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-title-row">
+              <h2>Payment update</h2>
+              <span class="badge success">Paid</span>
+            </div>
+            <ul class="item-list">
+              <li><strong>Mode</strong><span>Card</span></li>
+              <li><strong>Amount</strong><span>$24.50</span></li>
+              <li><strong>Next payment</strong><span>Today, 5:00 PM</span></li>
+            </ul>
+            <div class="panel-actions">
+              <button class="primary-button">View invoice</button>
+            </div>
+          </article>
+
+          <article class="panel wide">
+            <div class="panel-title-row">
+              <h2>Delivery & next payment page</h2>
+              <span class="badge">Home</span>
+            </div>
+            <p class="detail-text">House No. 12, Green Park Road, Near City Pharmacy, Hyderabad.</p>
+            <div class="summary-grid">
+              <div>
+                <p class="summary-label">Estimated arrival</p>
+                <strong>Today, 8:30 PM</strong>
+              </div>
+              <div>
+                <p class="summary-label">Payment due</p>
+                <strong>$12.00</strong>
+              </div>
+            </div>
+            <div class="panel-actions">
+              <button class="secondary-button">Manage payment</button>
+              <button class="primary-button">Track delivery</button>
+            </div>
+          </article>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

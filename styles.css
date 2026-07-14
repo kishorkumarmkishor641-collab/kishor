@@ -1,0 +1,181 @@
+:root {
+  color-scheme: light;
+  --bg: #f4fbff;
+  --panel: #ffffff;
+  --primary: #2f7dff;
+  --primary-dark: #1958bf;
+  --text: #14324a;
+  --muted: #61819d;
+  --accent: #e8f4ff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(135deg, #eef8ff 0%, #fefefe 100%);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.app-shell {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+}
+
+.brand-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--accent);
+  color: var(--primary);
+  font-size: 1.4rem;
+}
+
+.topbar p {
+  color: var(--muted);
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 24px;
+  align-items: center;
+}
+
+.info-panel,
+.login-panel {
+  background: var(--panel);
+  border-radius: 24px;
+  box-shadow: 0 14px 45px rgba(20, 50, 74, 0.1);
+  padding: 28px;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.info-panel h2 {
+  font-size: 2rem;
+  margin: 8px 0 10px;
+}
+
+.intro {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.card-grid {
+  display: grid;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.info-card {
+  background: var(--accent);
+  border-radius: 16px;
+  padding: 14px 16px;
+}
+
+.info-card h3 {
+  margin: 0 0 6px;
+  font-size: 1rem;
+}
+
+.info-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.login-form h2 {
+  margin-top: 0;
+  margin-bottom: 6px;
+}
+
+.login-form label {
+  font-weight: 600;
+}
+
+.login-form input {
+  padding: 12px 14px;
+  border: 1px solid #d8e6f2;
+  border-radius: 12px;
+  font-size: 1rem;
+  outline: none;
+}
+
+.login-form input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(47, 125, 255, 0.16);
+}
+
+.login-form button {
+  margin-top: 8px;
+  padding: 12px 14px;
+  border: none;
+  border-radius: 12px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.login-form button:hover {
+  background: var(--primary-dark);
+}
+
+.hint {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+.message {
+  min-height: 22px;
+  margin: 0;
+  color: #1f8b4c;
+  font-weight: 600;
+}
+
+@media (max-width: 800px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+}
